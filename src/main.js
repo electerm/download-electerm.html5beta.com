@@ -21,6 +21,7 @@ const check = {
   proxyReqOptDecorator: (proxyReqOpts, srcReq) => {
     console.log('srcReq.headers', srcReq.headers)
     proxyReqOpts.headers.host = TARGET_URL
+    delete proxyReqOpts.headers['x-forwarded-for']
     return proxyReqOpts
   }
 }
