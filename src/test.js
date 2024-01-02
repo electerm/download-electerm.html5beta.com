@@ -4,12 +4,10 @@ const { resolve } = require('path')
 
 const {
   HOST_TEST = '127.0.0.1',
-  PORT_TEST = 24565,
-  PATH_START
+  PORT_TEST = 24565
 } = process.env
 
 app.use(
-  PATH_START,
   express.static(
     resolve(__dirname, '../')
   )
