@@ -8,8 +8,7 @@ const {
 
 const check = {
   filter: (req, res) => {
-    return req.method === 'GET' &&
-      req.path.startsWith(PATH_START)
+    return req.path.startsWith(PATH_START)
   },
   limit: '200mb',
   userResHeaderDecorator: (headers, userReq, userRes, proxyReq, proxyRes) => {
@@ -19,9 +18,14 @@ const check = {
   }
 }
 
-app.use(
+app.get(
   '/download',
   proxy(TARGET_URL, check)
+)
+
+app.get(
+  '/',
+  (req, res) => res.send('ok')
 )
 
 module.exports = app
