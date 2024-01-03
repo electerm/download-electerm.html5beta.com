@@ -1,4 +1,4 @@
-const proxy = require('express-http-proxy')
+const { createProxyMiddleware } = require('http-proxy-middleware')
 const app = require('express')()
 app.disable('x-powered-by')
 
@@ -7,23 +7,26 @@ const {
   PATH_START = '/electerm/electerm/releases/download/'
 } = process.env
 
-const check = {
-  filter: (req, res) => {
-    return req.path.startsWith(PATH_START)
-  },
-  limit: '200mb',
-  userResHeaderDecorator: (headers, userReq, userRes, proxyReq, proxyRes) => {
-    // recieves an Object of headers, returns an Object of headers.
-    return headers
-  },
-  proxyReqOptDecorator: (proxyReqOpts, srcReq) => {
-    return proxyReqOpts
-  }
+const filter = function (pathname, req) {
+  console.log('pathname', pathname, '/download' + PATH_START)
+  return pathname.startsWith('/download' + PATH_START) &&
+    req.method === 'GET'
+}
+
+const opts = {
+
+  target: TARGET_URL,
+  followRedirects: true,
+  pathRewrite: function (path, req) { return path.replace('/download', '/') }
+  // protocolRewrite: true,
+  // autoRewrite: true,
+  // changeOrigin: false,
+  // hostRewrite: true,
 }
 
 app.use(
   '/download',
-  proxy(TARGET_URL, check)
+  createProxyMiddleware(filter, opts)
 )
 
 app.get(
