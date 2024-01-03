@@ -8,7 +8,6 @@ const {
 } = process.env
 
 const filter = function (pathname, req) {
-  console.log('pathname', pathname)
   return pathname.startsWith(PATH_START) &&
     req.method === 'GET'
 }
@@ -26,8 +25,8 @@ const opts = {
       const oneYearInSeconds = 365 * 24 * 60 * 60
       const cacheControl = `public, max-age=${oneYearInSeconds}`
       const expires = new Date(Date.now() + oneYearInSeconds * 1000).toUTCString()
-      res.setHeader('Cache-Control', cacheControl)
-      res.setHeader('Expires', expires)
+      res.set('Cache-Control', cacheControl)
+      res.set('Expires', expires)
       res.redirect(redirectUrl)
     }
   }
