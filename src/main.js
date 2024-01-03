@@ -23,6 +23,11 @@ const opts = {
   onProxyRes: function handleProxyResponse (proxyRes, req, res) {
     if (proxyRes.statusCode === 302) {
       const redirectUrl = proxyRes.headers.location
+      const oneYearInSeconds = 365 * 24 * 60 * 60
+      const cacheControl = `public, max-age=${oneYearInSeconds}`
+      const expires = new Date(Date.now() + oneYearInSeconds * 1000).toUTCString()
+      res.setHeader('Cache-Control', cacheControl)
+      res.setHeader('Expires', expires)
       res.redirect(redirectUrl)
     }
   }
