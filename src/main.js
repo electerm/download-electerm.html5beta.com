@@ -8,6 +8,7 @@ const {
 } = process.env
 
 const filter = function (pathname, req) {
+  console.log('pathname', pathname)
   return pathname.startsWith(PATH_START) &&
     req.method === 'GET'
 }
