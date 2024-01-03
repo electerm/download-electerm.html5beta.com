@@ -20,9 +20,12 @@ app.get(
 
 app.get(
   '/temp/api/f1.js',
-  (req, res) => res.redirect('/temp/api/f.js')
+  (req, res) => {
+    console.log('req.path', req.path)
+    res.redirect(302, 'https://html5beta.com')
+  }
 )
 
 app.listen(PORT_TEST, HOST_TEST, () => {
-  console.log(`server is running at http://${HOST_TEST}:${PORT_TEST}`);
+  console.log(`server is running at http://${HOST_TEST}:${PORT_TEST}`)
 })

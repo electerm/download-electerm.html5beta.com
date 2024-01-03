@@ -8,24 +8,27 @@ const {
 } = process.env
 
 const filter = function (pathname, req) {
-  console.log('pathname', pathname, '/download' + PATH_START)
-  return pathname.startsWith('/download' + PATH_START) &&
+  return pathname.startsWith(PATH_START) &&
     req.method === 'GET'
 }
 
 const opts = {
-
   target: TARGET_URL,
+  // followRedirects: true,
+  changeOrigin: true,
+  // pathRewrite: function (path, req) { return path.replace('/download', '/') },
   followRedirects: true,
-  pathRewrite: function (path, req) { return path.replace('/download', '/') }
-  // protocolRewrite: true,
-  // autoRewrite: true,
-  // changeOrigin: false,
-  // hostRewrite: true,
+  // Define the handleProxyResponse function
+  onProxyRes: function handleProxyResponse (proxyRes, req, res) {
+    if (proxyRes.statusCode === 302) {
+      const redirectUrl = proxyRes.headers.location
+      res.redirect(redirectUrl)
+    }
+  }
 }
 
 app.use(
-  '/download',
+  '/',
   createProxyMiddleware(filter, opts)
 )
 
