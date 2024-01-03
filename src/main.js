@@ -33,7 +33,7 @@ app.use(
 )
 
 app.get(
-  '/',
+  '/test',
   (req, res) => res.send('ok')
 )
 
