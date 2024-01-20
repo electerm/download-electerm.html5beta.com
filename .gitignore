@@ -108,3 +108,4 @@ dist
 /electerm-sync.json
 .vercel
 .env.local
+venv

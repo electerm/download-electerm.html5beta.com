@@ -22,7 +22,7 @@ app.get(
   '/temp/api/f1.js',
   (req, res) => {
     console.log('req.path', req.path)
-    res.redirect(302, 'https://html5beta.com')
+    res.redirect(302, 'https://blog.xiaoz.org/archives/15692')
   }
 )
 
