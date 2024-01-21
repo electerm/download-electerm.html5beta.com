@@ -109,3 +109,4 @@ dist
 .vercel
 .env.local
 venv
+__pycache__
