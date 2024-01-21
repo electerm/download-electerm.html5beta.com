@@ -45,5 +45,5 @@ def test():
 if __name__ == "__main__":
     HOST = os.getenv('HOST', '127.0.0.1')
     PORT = int(os.getenv('PORT', 3000))
-    
+
     app.run(host=HOST, port=PORT)
